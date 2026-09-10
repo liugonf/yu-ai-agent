@@ -1,0 +1,49 @@
+### ===== 恋爱大师（Spring AI + RAG） =====
+
+### 恋爱大师 - 多轮恋爱咨询（同一 conversationId 开启多轮记忆）
+POST http://localhost:8124/api/ai/love-master/chat
+Content-Type: application/json
+
+{"message":"你好，我单身很久了，不知道怎么扩大社交圈","conversationId":"love-1"}
+
+### 恋爱大师 - 第 2 轮：考验记忆
+POST http://localhost:8124/api/ai/love-master/chat
+Content-Type: application/json
+
+{"message":"还记得我是什么感情状态吗？","conversationId":"love-1"}
+
+### 恋爱大师 - 结构化恋爱报告
+POST http://localhost:8124/api/ai/love-master/report
+Content-Type: application/json
+
+{"message":"帮我分析下我单身阶段的状况并给建议","username":"小鱼","conversationId":"love-1"}
+
+### 恋爱大师 - 本地知识库问答（RAG，首次调用会把 document/*.md 向量化建库）
+POST http://localhost:8124/api/ai/love-master/chat/rag
+Content-Type: application/json
+
+{"message":"单身很久了，具体怎么扩大社交圈认识更多异性？","conversationId":"love-rag-1"}
+
+### 恋爱大师 - 云知识库问答（RAG，对接百炼云知识库 aid-73b45a2a904c493f9cba3cdf63bc4524）
+POST http://localhost:8124/api/ai/love-master/chat/rag-cloud
+Content-Type: application/json
+
+{"message":"我已经结婚了，婚后关系不太亲密，怎么办？","conversationId":"love-cloud-1"}
+
+### 恋爱大师 - 按状态过滤的知识问答（status=已婚，基于元信息过滤）
+POST http://localhost:8124/api/ai/love-master/chat/rag/filter
+Content-Type: application/json
+
+{"message":"婚后关系不太亲密怎么办？","status":"已婚","conversationId":"love-rag-married"}
+
+### 恋爱大师 - MCP 工具问答（调用图片搜索 MCP 服务）
+POST http://localhost:8124/api/ai/love-master/chat/mcp
+Content-Type: application/json
+
+{"message":"帮我搜索一些哄另一半开心的可爱宠物图片","conversationId":"love-mcp-1"}
+
+### AI 超级智能体（ReAct 循环 + 工具调用）
+POST http://localhost:8124/api/ai/agent/run
+Content-Type: application/json
+
+{"message":"帮我搜索几张可爱猫咪的图片，把链接整理给我"}

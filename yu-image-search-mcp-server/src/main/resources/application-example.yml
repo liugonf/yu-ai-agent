@@ -1,0 +1,14 @@
+# ===== 示例配置模板 =====
+# 用法：复制本文件为 application.yml（已被 .gitignore 忽略，不会提交），替换为你的 Key
+spring:
+  application:
+    name: yu-image-search-mcp-server
+  profiles:
+    active: stdio
+
+server:
+  port: 8127
+
+# SearchAPI.io 图片搜索 API Key（engine=google_images / baidu）
+searchapi:
+  api-key: "你的SearchAPIKey"

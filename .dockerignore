@@ -1,0 +1,9 @@
+target/
+.m2-repo/
+chat-memory/
+rag-store/
+yu-image-search-mcp-server/
+yu-ai-agent-frontend/
+.idea/
+.git/
+*.iml

@@ -1,0 +1,56 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# 工作区内的 Maven 本地仓库与对话记忆落盘（沙箱构建产物，不入库）
+.m2-repo/
+chat-memory/
+.api-src/
+.api-tmp/
+rag-store/
+
+# 部署打包产物
+deploy/
+*.zip
+
+# 环境相关的 Maven 配置
+.mvn/maven.config
+
+# ===== 敏感配置：真实 API Key / 数据库密码不入库 =====
+# 请复制 application-example.yml 为 application.yml 并填写自己的配置
+src/main/resources/application.yml
+**/src/main/resources/application.yml
+**/src/main/resources/application-local.yml
+
+# 本地运行产物
+runtime-cp.txt
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

@@ -1,0 +1,16 @@
+# 生产环境配置（--spring.profiles.active=prod 时生效）
+spring:
+  ai:
+    mcp:
+      client:
+        # 生产环境默认关闭 MCP（避免单 jar 部署时还要额外部署 MCP 子进程）
+        # 如需启用图片搜索，请单独部署图片搜索 MCP 服务，并把这里改为 true + 配置 SSE 连接
+        enabled: false
+
+# 生产环境默认用本地文件记忆，避免依赖数据库；有 MySQL 时可改为 true
+mysql:
+  enabled: false
+
+server:
+  # 与云托管服务端口保持一致（8124）
+  port: 8124

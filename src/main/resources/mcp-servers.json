@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "yu-image-search-mcp-server": {
+      "command": "D:/java/bin/java.exe",
+      "args": [
+        "-Dspring.profiles.active=stdio",
+        "-Dspring.main.web-application-type=none",
+        "-Dlogging.pattern.console=",
+        "-jar",
+        "D:/ai/yu-ai-agent/yu-image-search-mcp-server/target/yu-image-search-mcp-server-0.0.1-SNAPSHOT.jar"
+      ],
+      "env": {}
+    }
+  }
+}
