@@ -1,39 +1,318 @@
+/* ===================================================================
+   AI 超级智能体 · Editorial Intimacy 设计系统
+   灵感:手写信 + 私人日记 + 老式杂志内页
+   主色:牛血红 / 勃艮第 · 暖金点缀 · 奶油纸底
+   字体:Fraunces 衬线展示 + Manrope 几何正文 + Noto Serif SC 中文衬线
+   =================================================================== */
+
 :root {
-  --primary: #7c4dff;
-  --primary-dark: #6d28d9;
-  --primary-light: #a78bfa;
-  --lavender: #ede9fe;
-  --text: #1f2937;
-  --text-light: #6b7280;
-  --bg: #faf8ff;
-  --card: #ffffff;
+  /* 主色:牛血红 / 勃艮第(替代原紫色,彻底告别 AI 紫渐变) */
+  --primary: #7a1f2b;
+  --primary-dark: #4a0e1a;
+  --primary-soft: #a0334a;
+
+  /* 点缀:暖金 + 赤陶 */
+  --accent: #c8902c;
+  --accent-warm: #c8553d;
+  --accent-soft: #e8a95b;
+
+  /* 纸张基调:奶油、米色、做旧 */
+  --paper: #f4ebd9;
+  --paper-light: #fbf5e9;
+  --paper-dark: #efe1c5;
+  --paper-deep: #e6d4b0;
+
+  /* 文本:深咖啡与暖灰 */
+  --ink: #2a1a14;
+  --ink-soft: #5b4233;
+  --ink-mute: #8a7560;
+  --ink-faint: #b3a288;
+
+  /* 表面与边线 */
+  --card: #fdf8ec;
+  --card-warm: #f0e3c8;
+  --border: #d9c9a8;
+  --border-soft: #e6d8bc;
+
+  /* 阴影:暖色调,告别冷紫阴影 */
+  --shadow-sm: 0 4px 14px rgba(74, 14, 26, 0.06);
+  --shadow-md: 0 12px 32px rgba(74, 14, 26, 0.10);
+  --shadow-lg: 0 24px 56px rgba(74, 14, 26, 0.14);
+  --shadow-ink: 0 2px 0 0 rgba(74, 14, 26, 0.08);
+
+  /* 圆角:略带笔触感的不规则圆 */
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* 容器 */
+  --container: 1120px;
+
+  /* 字体族 */
+  --font-display: 'Fraunces', 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --font-body: 'Manrope', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-serif-cn: 'Noto Serif SC', 'Songti SC', Georgia, serif;
 }
 
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
-  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  color: var(--text);
-  background: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* 纸张颗粒纹理:细密的暖色噪点叠加,营造老纸质感 */
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(200, 144, 44, 0.04) 0, transparent 38%),
+    radial-gradient(circle at 82% 78%, rgba(122, 31, 43, 0.03) 0, transparent 42%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0 0.16 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
 }
 
 a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
 
+/* ===================================================================
+   通用按钮:墨水印章感
+   =================================================================== */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 28px;
+  gap: 10px;
+  padding: 15px 32px;
   border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-  color: #fff;
-  font-size: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--paper-light);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(122, 31, 43, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--primary-dark);
+  box-shadow: 0 12px 26px rgba(122, 31, 43, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(124, 77, 255, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: all 0.22s ease;
+}
+.btn-ghost:hover {
+  background: var(--primary);
+  color: var(--paper-light);
+  transform: translateY(-2px);
 }
 
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(124, 77, 255, 0.45); }
+/* ===================================================================
+   容器与通用区块:杂志栏目感
+   =================================================================== */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 28px; width: 100%; }
+.container.narrow { max-width: 760px; }
+
+.section { padding: 96px 0; position: relative; }
+
+.section-head {
+  text-align: left;
+  max-width: 720px;
+  margin: 0 auto 56px;
+  position: relative;
+}
+.section-head.center { text-align: center; }
+
+/* 小标:像栏目编号,带墨水点 */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  position: relative;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--primary);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.4vw, 48px);
+  line-height: 1.08;
+  margin: 0 0 18px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  color: var(--ink);
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+}
+.section-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--primary);
+}
+
+.section-subtitle {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0;
+  max-width: 580px;
+}
+.section-head.center .section-subtitle { margin: 0 auto; }
+
+/* 强调字:从紫渐变改为牛血红 + 暖金叠层衬线斜体 */
+.gradient-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--primary);
+  font-variation-settings: "opsz" 144, "SOFT" 80;
+  position: relative;
+  display: inline-block;
+}
+.gradient-text::after {
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 2px;
+  height: 8px;
+  background: var(--accent-soft);
+  opacity: 0.45;
+  z-index: -1;
+  border-radius: 4px;
+}
+
+/* ===================================================================
+   装饰元素:墨水点、分隔线
+   =================================================================== */
+.ink-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink-mute);
+}
+.ink-divider::before,
+.ink-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+}
+.ink-divider span {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* ===================================================================
+   玻璃拟态:暖纸半透明(保留 .glass 兼容)
+   =================================================================== */
+.glass {
+  background: rgba(251, 245, 233, 0.78);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===================================================================
+   滚动揭示动画(reveal) — fail-open
+   默认可见;仅当 html.js 存在(JS 已执行)时才隐藏待揭示。
+   这样 JS 失败/IO 不支持时内容仍可见,不会被困在 opacity:0。
+   =================================================================== */
+.reveal {
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+html.js .reveal { opacity: 0; transform: translateY(24px); }
+html.js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ===================================================================
+   Keyframes
+   =================================================================== */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes floatYslow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-16px) translateX(6px); }
+}
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(122, 31, 43, 0.45); }
+  70% { box-shadow: 0 0 0 14px rgba(122, 31, 43, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(122, 31, 43, 0); }
+}
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes inkBlink {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.4; }
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(8px, -6px) rotate(0.4deg); }
+  66% { transform: translate(-4px, 4px) rotate(-0.3deg); }
+}
+@keyframes underlineGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ===================================================================
+   响应式
+   =================================================================== */
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .section-title { font-size: 28px; }
+  .section-subtitle { font-size: 15px; }
+  .container { padding: 0 20px; }
+}
